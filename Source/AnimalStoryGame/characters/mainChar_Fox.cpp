@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Math/UnrealMathUtility.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AmainChar_Fox::AmainChar_Fox()
@@ -20,7 +21,7 @@ AmainChar_Fox::AmainChar_Fox()
 	cameraBoom->SocketOffset = FVector(0.f, 0.f, 0.f);
 	cameraBoom->SetRelativeRotation(FRotator(-20, 0, 0.f));
 	//cameraBoom->RelativeRotation = FRotator(0.f, 0.f, 0.f);
-	cameraBoom->bUsePawnControlRotation = false;
+	//cameraBoom->bUsePawnControlRotation = false;
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(cameraBoom, USpringArmComponent::SocketName);
@@ -31,6 +32,8 @@ AmainChar_Fox::AmainChar_Fox()
 void AmainChar_Fox::BeginPlay()
 {
 	Super::BeginPlay();
+
+	RootComponent->AddLocalRotation(FRotator(0, 60, 0));
 	
 }
 
@@ -54,6 +57,8 @@ void AmainChar_Fox::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAxis("forward", this, &AmainChar_Fox::moveForward);
+	PlayerInputComponent->BindAxis("moveLeftRight", this, &AmainChar_Fox::moveLeftRight);
+
 	PlayerInputComponent->BindAxis("GoFast", this, &AmainChar_Fox::GoFast);
 
 	PlayerInputComponent->BindAxis("xAxis", this, &AmainChar_Fox::CameraYaw_z);
@@ -68,24 +73,21 @@ void AmainChar_Fox :: moveForward(float val) {
 
 	if (val == 1) {
 		if (Controller != nullptr) {
-			const FRotator Rotation = Controller->GetControlRotation();
+			const FRotator Rotation = RootComponent->GetComponentRotation();//Controller->GetControlRotation();
 			const FRotator YawRotation(0.0f, Rotation.Yaw, 0.0f);
 
 			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-			RootComponent->SetWorldRotation(YawRotation);
 
 			AddMovementInput(Direction, 1);
 		}
 	}
 	else if (val == -1) {
 		if (Controller != nullptr) {
-			const FRotator Rotation = Controller->GetControlRotation();
+			const FRotator Rotation = RootComponent->GetComponentRotation();// Controller->GetControlRotation();
 			const FRotator YawRotation(0.0f, Rotation.Yaw, 0.0f);
 
 			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-
-			RootComponent->SetWorldRotation(YawRotation);
 
 			AddMovementInput(Direction, -1);
 		}
@@ -129,5 +131,20 @@ void AmainChar_Fox::CanLookAround(float val) {
 	if (val == 1) {
 		bCanLookAround = true;
 	}
+	else {
+		cameraBoom->SetRelativeRotation(FRotator(-20, -35, 0.f));
+	}
 }
+
+
+void AmainChar_Fox::moveLeftRight(float val) {
+	if (val == -1) {
+		RootComponent->AddWorldRotation(FRotator(0,-30 * GetWorld()->GetDeltaSeconds(),0));
+	}
+	else if (val == 1) {
+		RootComponent->AddWorldRotation(FRotator(0, 30 * GetWorld()->GetDeltaSeconds(), 0));
+	}
+}
+
+
 

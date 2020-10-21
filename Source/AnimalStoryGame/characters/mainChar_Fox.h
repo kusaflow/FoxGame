@@ -27,6 +27,10 @@ public:
 	//=======Variable================================
 	float VelShouldBe = 400;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "kusaVar", meta = (AllowPrivateAccess = "true"))
+	float VelForAnim_MoveFor = 400;
+
+
 	bool bCanLookAround = false;
 
 protected:
@@ -42,6 +46,9 @@ public:
 
 	UFUNCTION()
 	void moveForward(float val);
+
+	UFUNCTION()
+	void moveLeftRight(float val);
 
 	UFUNCTION()
 	void GoFast(float val);
