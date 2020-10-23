@@ -139,10 +139,10 @@ void AmainChar_Fox::CanLookAround(float val) {
 
 void AmainChar_Fox::moveLeftRight(float val) {
 	if (val == -1) {
-		RootComponent->AddWorldRotation(FRotator(0,-30 * GetWorld()->GetDeltaSeconds(),0));
+		RootComponent->AddWorldRotation(FRotator(0,-50 * GetWorld()->GetDeltaSeconds(),0));
 	}
 	else if (val == 1) {
-		RootComponent->AddWorldRotation(FRotator(0, 30 * GetWorld()->GetDeltaSeconds(), 0));
+		RootComponent->AddWorldRotation(FRotator(0, 50 * GetWorld()->GetDeltaSeconds(), 0));
 	}
 }
 
