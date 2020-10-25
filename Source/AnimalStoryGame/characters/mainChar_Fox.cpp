@@ -142,7 +142,7 @@ void AmainChar_Fox::moveLeftRight(float val) {
 		RootComponent->AddWorldRotation(FRotator(0,-50 * GetWorld()->GetDeltaSeconds(),0));
 	}
 	else if (val == 1) {
-		RootComponent->AddWorldRotation(FRotator(0, 50 * GetWorld()->GetDeltaSeconds(), 0));
+		RootComponent->AddWorldRotation(FRotator(0, 5tt0 * GetWorld()->GetDeltaSeconds(), 0));
 	}
 }
 
