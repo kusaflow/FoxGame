@@ -52,6 +52,8 @@ public:
 
 	FVector InitMeshRelativeLoc;
 
+	float fox_spine1_yOffset_shouldBe;
+
 
 
 protected:
