@@ -176,11 +176,11 @@ void AmainChar_Fox::Tick(float DeltaTime)
 		animInst->Front_LeftLeg_Alpha = 1;
 	}
 
-	if (fox_spine1_yOffset_shouldBe > (Back_zOffset * -1) - Front_zOffset) {
-		fox_spine1_yOffset_shouldBe -= DeltaTime*50;
+	if (fox_spine1_yOffset_shouldBe >= (Back_zOffset * -1) - Front_zOffset ) {
+		fox_spine1_yOffset_shouldBe -= DeltaTime*100;
 	}
-	else {
-		fox_spine1_yOffset_shouldBe += DeltaTime * 50;
+	else if (fox_spine1_yOffset_shouldBe < (Back_zOffset * -1) - Front_zOffset ) {
+		fox_spine1_yOffset_shouldBe += DeltaTime * 100;
 	}
 	
 	//animInst->fox_spine1_yOffset = Front_RightLeg_Hit.ImpactPoint.Z - Front_RightLeg_Loc.Z;// - Back_RightLeg_Hit.ImpactPoint.Z;
@@ -191,8 +191,8 @@ void AmainChar_Fox::Tick(float DeltaTime)
 
 	//Ik Ends---------------------------------------------------------------------
 
-	if (GetVelocity().Size() != 0)
-		GetMesh()->SetRelativeLocation(InitMeshRelativeLoc);
+	if (GetVelocity().Size() != 0) {}
+		//GetMesh()->SetRelativeLocation(InitMeshRelativeLoc);
 		
 
 
