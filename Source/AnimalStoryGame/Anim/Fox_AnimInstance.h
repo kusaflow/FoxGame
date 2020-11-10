@@ -32,6 +32,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
 	float fox_spine1_yOffset;
 
+	//range from 0 to 500
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVarT")
+		float interact;
+
+
+
+
 	//Effector Target Alpha 
 	//-------Back Left Leg 
 	UPROPERTY(BlueprintReadWrite, Category = "IK_kusaVar")

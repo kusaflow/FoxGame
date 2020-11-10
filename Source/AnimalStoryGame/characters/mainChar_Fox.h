@@ -54,6 +54,13 @@ public:
 
 	float fox_spine1_yOffset_shouldBe;
 
+	//AnimInstances
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusa_AnimInst")
+	class UAnimInstance* normal;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusa_AnimInst")
+	class UFox_AnimInstance* openingRope;
+
 
 
 protected:
@@ -84,5 +91,7 @@ public:
 
 	UFUNCTION()
 	void CanLookAround(float val);
+
+	void IK(float DeltaTime);
 
 };
