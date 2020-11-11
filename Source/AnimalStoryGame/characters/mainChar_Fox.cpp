@@ -13,6 +13,7 @@
 #include "../Anim/Fox_AnimInstance.h"
 #include "../kusaGameInstance.h"
 
+
 // Sets default values
 AmainChar_Fox::AmainChar_Fox()
 {

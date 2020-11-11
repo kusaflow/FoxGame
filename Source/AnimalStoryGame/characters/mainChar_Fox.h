@@ -71,6 +71,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
 	bool disableInput_interact = false;
+	
 
 
 
@@ -107,5 +108,8 @@ public:
 
 	UFUNCTION()
 	void interact_f();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void playAnimation();
 
 };
