@@ -15,6 +15,7 @@ void UFox_AnimInstance::update() {
 	if (player) {
 		//Player_vel = player->
 		Player_vel = player->VelForAnim_MoveFor;
+		interact = player->interact;
 	}
 
 }

@@ -11,6 +11,7 @@
 #include "GameFramework/Character.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "../Anim/Fox_AnimInstance.h"
+#include "../kusaGameInstance.h"
 
 // Sets default values
 AmainChar_Fox::AmainChar_Fox()
@@ -23,7 +24,7 @@ AmainChar_Fox::AmainChar_Fox()
 	cameraBoom->bDoCollisionTest = false;
 	cameraBoom->TargetArmLength = 800;
 	cameraBoom->SocketOffset = FVector(0.f, 0.f, 0.f);
-	cameraBoom->SetRelativeRotation(FRotator(-20, 0, 0.f));
+	cameraBoom->SetRelativeRotation(FRotator(-20, 300, 0.f));
 	//cameraBoom->RelativeRotation = FRotator(0.f, 0.f, 0.f);
 	//cameraBoom->bUsePawnControlRotation = false;
 
@@ -62,6 +63,7 @@ void AmainChar_Fox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 
 
 	if (GetCharacterMovement()->MaxWalkSpeed < VelShouldBe) {
@@ -73,14 +75,52 @@ void AmainChar_Fox::Tick(float DeltaTime)
 
 	//Inverse Kinemetics
 	IK(DeltaTime);
+
+	//animInst index set
+	AnimInst_Idx = gameInst->anim_inst_idx;
 	
 
 	if (GetVelocity().Size() != 0) {}
 		//GetMesh()->SetRelativeLocation(InitMeshRelativeLoc);
+
+	
+	//interact CoolDown
+	if (interact > 0) {
+		interact -= 130 * DeltaTime;
+	}
+	else if (interact <= 0) {
+		interact = 0;
+	}
+	
 		
 
 
 }
+
+// Called to bind functionality to input
+void AmainChar_Fox::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	
+	PlayerInputComponent->BindAxis("forward", this, &AmainChar_Fox::moveForward);
+	PlayerInputComponent->BindAxis("moveLeftRight", this, &AmainChar_Fox::moveLeftRight);
+
+	PlayerInputComponent->BindAxis("GoFast", this, &AmainChar_Fox::GoFast);
+	
+	
+	PlayerInputComponent->BindAxis("xAxis", this, &AmainChar_Fox::CameraYaw_z);
+	PlayerInputComponent->BindAxis("yAxis", this, &AmainChar_Fox::CameraPitch_y);
+
+	//look around
+	PlayerInputComponent->BindAxis("LookAround", this, &AmainChar_Fox::CanLookAround);
+	
+	 
+	//interact
+	PlayerInputComponent->BindAction("interact", IE_Pressed, this, &AmainChar_Fox::interact_f);
+	
+}
+
 
 void AmainChar_Fox::IK(float DeltaTime) {
 	//Inverse Kinemetics
@@ -209,25 +249,11 @@ void AmainChar_Fox::IK(float DeltaTime) {
 
 }
 
-// Called to bind functionality to input
-void AmainChar_Fox::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	PlayerInputComponent->BindAxis("forward", this, &AmainChar_Fox::moveForward);
-	PlayerInputComponent->BindAxis("moveLeftRight", this, &AmainChar_Fox::moveLeftRight);
-
-	PlayerInputComponent->BindAxis("GoFast", this, &AmainChar_Fox::GoFast);
-
-	PlayerInputComponent->BindAxis("xAxis", this, &AmainChar_Fox::CameraYaw_z);
-	PlayerInputComponent->BindAxis("yAxis", this, &AmainChar_Fox::CameraPitch_y);
-
-	//look around
-	PlayerInputComponent->BindAxis("LookAround", this, &AmainChar_Fox::CanLookAround);
-
-}
 
 void AmainChar_Fox :: moveForward(float val) {
+	if (disableInput_movement) {
+		return;
+	}
 
 	if (val == 1) {
 		if (Controller != nullptr) {
@@ -256,6 +282,10 @@ void AmainChar_Fox :: moveForward(float val) {
 
 
 void AmainChar_Fox::GoFast(float val) {
+	if (disableInput_movement) {
+		return;
+	}
+
 	VelShouldBe = 200;
 	
 	if (val == 1) {
@@ -265,6 +295,10 @@ void AmainChar_Fox::GoFast(float val) {
 
 
 void AmainChar_Fox::CameraYaw_z(float val) {
+	if (disableInput_camera) {
+		return;
+	}
+
 	if (!bCanLookAround) {
 		return;
 	}
@@ -275,6 +309,10 @@ void AmainChar_Fox::CameraYaw_z(float val) {
 }
 
 void AmainChar_Fox::CameraPitch_y(float val) {
+	if (disableInput_camera) {
+		return;
+	}
+
 	if (!bCanLookAround) {
 		return;
 	}
@@ -285,6 +323,10 @@ void AmainChar_Fox::CameraPitch_y(float val) {
 }
 
 void AmainChar_Fox::CanLookAround(float val) {
+	if (disableInput_camera) {
+		return;
+	}
+
 	bCanLookAround = false;
 	if (val == 1) {
 		bCanLookAround = true;
@@ -296,6 +338,10 @@ void AmainChar_Fox::CanLookAround(float val) {
 
 
 void AmainChar_Fox::moveLeftRight(float val) {
+	if (disableInput_movement) {
+		return;
+	}
+
 	if (val == -1) {
 		RootComponent->AddWorldRotation(FRotator(0,-50 * GetWorld()->GetDeltaSeconds(),0));
 	}
@@ -303,6 +349,15 @@ void AmainChar_Fox::moveLeftRight(float val) {
 		RootComponent->AddWorldRotation(FRotator(0, 50 * GetWorld()->GetDeltaSeconds(), 0));
 	}
 }
-
+ 
+void AmainChar_Fox::interact_f() {
+	//--------return if disabled
+	if (disableInput_interact) {
+		return;
+	}
+	interact += 50;
+	if (interact >= 500)
+		interact = 500;
+}
 
 

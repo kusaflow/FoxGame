@@ -34,7 +34,7 @@ public:
 
 	//range from 0 to 500
 	UPROPERTY(BlueprintReadWrite, Category = "kusaVarT")
-		float interact;
+	float interact;
 
 
 

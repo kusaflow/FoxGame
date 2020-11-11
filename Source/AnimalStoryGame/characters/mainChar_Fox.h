@@ -54,12 +54,23 @@ public:
 
 	float fox_spine1_yOffset_shouldBe;
 
-	//AnimInstances
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusa_AnimInst")
-	class UAnimInstance* normal;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+		float interact;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	int AnimInst_Idx;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusa_AnimInst")
-	class UFox_AnimInstance* openingRope;
+
+
+	// disable Interact======================
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	bool disableInput_movement = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	bool disableInput_camera = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	bool disableInput_interact = false;
 
 
 
@@ -93,5 +104,8 @@ public:
 	void CanLookAround(float val);
 
 	void IK(float DeltaTime);
+
+	UFUNCTION()
+	void interact_f();
 
 };
