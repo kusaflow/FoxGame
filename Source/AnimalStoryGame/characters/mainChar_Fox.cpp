@@ -92,6 +92,28 @@ void AmainChar_Fox::Tick(float DeltaTime)
 	else if (interact <= 0) {
 		interact = 0;
 	}
+
+	//state change check
+	if (do_changeState_at_mileStone) {
+		if (interact >= mileStone_interactVal) {
+			do_changeState_at_mileStone = false;
+			if (playCineMetic) {
+				playAnimation();
+			}
+			
+			disableInput_camera = AMS_disableInput_camera;
+			disableInput_interact = AMS_disableInput_interact;
+			disableInput_movement = AMS_disableInput_movement;
+
+			AnimInst_Idx = AMS_animInst;
+			gameInst->anim_inst_idx = AMS_animInst;
+
+			cameraBoom->TargetArmLength = AMS_armLength;
+			cameraBoom->SetRelativeRotation(AMS_CameraRot);
+			
+			
+		}
+	}
 	
 		
 
@@ -241,7 +263,7 @@ void AmainChar_Fox::IK(float DeltaTime) {
 	}
 
 	//animInst->fox_spine1_yOffset = Front_RightLeg_Hit.ImpactPoint.Z - Front_RightLeg_Loc.Z;// - Back_RightLeg_Hit.ImpactPoint.Z;
-	animInst->fox_spine1_yOffset = fox_spine1_yOffset_shouldBe; //(Back_zOffset * -1) - Front_zOffset;
+	animInst->fox_spine1_yOffset = /*fox_spine1_yOffset_shouldBe; */(Back_zOffset * -1) - Front_zOffset;
 	//GetMesh()->SetRelativeLocation(InitMeshRelativeLoc - FVector(0, 0, Back_zOffset - 10));
 
 

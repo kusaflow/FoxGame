@@ -60,6 +60,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
 	int AnimInst_Idx;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	float mileStone_interactVal;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	bool playCineMetic;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	bool do_changeState_at_mileStone;
+
 
 
 	// disable Interact======================
@@ -71,6 +80,27 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
 	bool disableInput_interact = false;
+
+	//after mile stone = AMS
+	// disable Interact======================
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	bool AMS_disableInput_movement = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+		bool AMS_disableInput_camera = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+		bool AMS_disableInput_interact = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+		int AMS_armLength;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+		int AMS_animInst;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+		FRotator AMS_CameraRot;
+
 	
 
 
