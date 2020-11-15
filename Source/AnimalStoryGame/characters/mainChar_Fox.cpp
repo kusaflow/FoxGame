@@ -11,7 +11,8 @@
 #include "GameFramework/Character.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "../Anim/Fox_AnimInstance.h"
-#include "../kusaGameInstance.h"
+#include "../kusaGameInstance.h" 	
+#include "Components/CapsuleComponent.h"
 
 
 // Sets default values
