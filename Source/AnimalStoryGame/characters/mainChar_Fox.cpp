@@ -379,9 +379,19 @@ void AmainChar_Fox::interact_f() {
 	if (disableInput_interact) {
 		return;
 	}
-	interact += 50;
-	if (interact >= 500)
-		interact = 500;
+
+	UFox_AnimInstance* animInst = Cast<UFox_AnimInstance>(GetMesh()->GetAnimInstance());
+
+	if (What_to_do_with_interact == 0) {
+		interact += 50;
+		if (interact >= 500)
+			interact = 500;
+	}
+	else if (What_to_do_with_interact == 1) {
+		animInst->AnimState = 1;
+		animInst->inner_AnimState = 1;
+
+	}
 }
 
 

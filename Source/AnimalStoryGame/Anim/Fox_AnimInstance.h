@@ -22,6 +22,19 @@ public:
 		void update();
 
 	//--------------------------------------------------------------
+	/*
+	* Anim State 
+	* 1 = eating For Energy
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	int AnimState;
+
+	/*
+	* inner Anim State
+	* 1 = mushroom from ground
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	int inner_AnimState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 	class AmainChar_Fox* player;

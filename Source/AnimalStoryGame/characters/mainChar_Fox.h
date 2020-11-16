@@ -55,7 +55,14 @@ public:
 	float fox_spine1_yOffset_shouldBe;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
-		float interact;
+	float interact;
+	/*
+	* 0 to stretch motion / elastic effect
+	* 1 to eat something / get energy
+	* 
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	int What_to_do_with_interact;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
 	int AnimInst_Idx;
