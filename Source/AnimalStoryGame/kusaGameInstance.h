@@ -21,4 +21,11 @@ public:
 		1 to openRope
 	
 	*/
+
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
+	bool bCanDisapearFood;
+
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
+	bool bIsCurrentFoodIsThere;
+
 };

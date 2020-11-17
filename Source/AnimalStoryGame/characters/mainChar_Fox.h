@@ -63,7 +63,10 @@ public:
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
 	int What_to_do_with_interact;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	FVector OtherActorLoc_ToSnapLoc;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
 	int AnimInst_Idx;
 
