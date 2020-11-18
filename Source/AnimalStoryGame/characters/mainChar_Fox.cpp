@@ -392,9 +392,11 @@ void AmainChar_Fox::interact_f() {
 		if (gameInst->bIsCurrentFoodIsThere) {
 			animInst->AnimState = 1;
 			animInst->inner_AnimState = 1;
+			OtherActorLoc_ToSnapLoc.Z = RootComponent->GetComponentLocation().Z;
+			RootComponent->SetWorldLocation(OtherActorLoc_ToSnapLoc);
 		}
 
-		//RootComponent->SetWorldLocation(OtherActorLoc_ToSnapLoc);
+		
 
 	}
 }

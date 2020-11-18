@@ -111,6 +111,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
 		FRotator AMS_CameraRot;
 
+
+	//power================================================================
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+		float powerLvl;// total power it can have is 1000 at base and will be upgrated
+
 	
 
 

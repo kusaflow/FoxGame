@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h" 
 #include "../../characters/mainChar_Fox.h"
 #include "../../kusaGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AEG_mushroom_01::AEG_mushroom_01()
@@ -51,6 +52,13 @@ void AEG_mushroom_01::Tick(float DeltaTime)
 		
 		if (gameInst) {
 			if (gameInst->bCanDisapearFood && mesh) {
+
+				AmainChar_Fox* fox = Cast<AmainChar_Fox>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+
+				if (fox) {
+					fox->OtherActorLoc_ToSnapLoc = mesh->GetComponentLocation();
+				}
+
 				mesh->DestroyComponent();
 				isFoodThere = false;
 				gameInst->bCanDisapearFood = false;
