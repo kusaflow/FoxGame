@@ -59,6 +59,8 @@ void AEG_mushroom_01::Tick(float DeltaTime)
 					fox->OtherActorLoc_ToSnapLoc = mesh->GetComponentLocation();
 				}
 
+				fox->powerLvl += 50;
+
 				mesh->DestroyComponent();
 				isFoodThere = false;
 				gameInst->bCanDisapearFood = false;
@@ -74,6 +76,10 @@ void AEG_mushroom_01 :: OnOverlapBegin(class UPrimitiveComponent* OverlappedComp
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	CanEatFood = true;
+
+	if (isFoodThere)
+		mesh->SetWorldScale3D(FVector(6));
+
 	
 	AmainChar_Fox* fox = Cast<AmainChar_Fox>(OtherActor);
 
@@ -100,4 +106,8 @@ void AEG_mushroom_01::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, cl
 	if (fox) {
 		fox->What_to_do_with_interact = 0;
 	}
+
+	if (isFoodThere)
+		mesh->SetWorldScale3D(FVector(5));
+
 }

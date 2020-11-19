@@ -392,8 +392,16 @@ void AmainChar_Fox::interact_f() {
 		if (gameInst->bIsCurrentFoodIsThere) {
 			animInst->AnimState = 1;
 			animInst->inner_AnimState = 1;
+			
+			const FRotator YawRotation(0.0f, RootComponent->GetComponentRotation().Yaw, 0.0f);
+			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+			OtherActorLoc_ToSnapLoc -= Direction*100;
+
 			OtherActorLoc_ToSnapLoc.Z = RootComponent->GetComponentLocation().Z;
 			RootComponent->SetWorldLocation(OtherActorLoc_ToSnapLoc);
+
+
 		}
 
 		
