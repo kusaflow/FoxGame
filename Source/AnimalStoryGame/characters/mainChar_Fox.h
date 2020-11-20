@@ -157,4 +157,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void playAnimation();
 
+	UFUNCTION()
+		void HudManagement();
+
 };

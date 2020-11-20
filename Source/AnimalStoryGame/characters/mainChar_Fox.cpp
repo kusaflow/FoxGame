@@ -383,11 +383,13 @@ void AmainChar_Fox::interact_f() {
 	UFox_AnimInstance* animInst = Cast<UFox_AnimInstance>(GetMesh()->GetAnimInstance());
 	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 
+	//to streach=========|============
 	if (What_to_do_with_interact == 0) {
 		interact += 50;
 		if (interact >= 500)
 			interact = 500;
 	}
+	// to eat mushrooom
 	else if (What_to_do_with_interact == 1) {
 		if (gameInst->bIsCurrentFoodIsThere) {
 			animInst->AnimState = 1;
@@ -406,6 +408,13 @@ void AmainChar_Fox::interact_f() {
 
 		
 
+	}
+}
+
+
+void AmainChar_Fox :: HudManagement() {
+	if (What_to_do_with_interact != 0) {
+		
 	}
 }
 

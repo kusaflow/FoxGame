@@ -18,10 +18,15 @@ public:
 
 	virtual void NativeConstruct() override;
 
+	void Update_Interact_progressBar();
+
 private:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* InstructHelper;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UProgressBar* interact_progressBar;
 	
 };
