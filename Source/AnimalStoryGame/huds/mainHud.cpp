@@ -26,7 +26,7 @@ void AmainHud::Tick(float Delta) {
 
 	//helper class
 	if (UI_helper) {
-		UI_helper->Update_Interact_progressBar();
+		//UI_helper->Update_Interact_progressBar();
 	}
 
 }
