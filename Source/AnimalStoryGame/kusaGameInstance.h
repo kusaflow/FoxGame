@@ -27,5 +27,10 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
 	bool bIsCurrentFoodIsThere;
+	
+	//show Path
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
+		bool bshowPath;
+
 
 };
