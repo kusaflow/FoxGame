@@ -4,22 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Scene1_Lvl_Guide.generated.h"
+#include "s1_lvlGuide.generated.h"
 
 UCLASS()
-class ANIMALSTORYGAME_API AScene1_Lvl_Guide : public AActor
+class ANIMALSTORYGAME_API As1_lvlGuide : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AScene1_Lvl_Guide();
+	As1_lvlGuide();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "kusa")
-		class UBoxComponent* box;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "kusa")
-		class UStaticMeshComponent* mesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
+	TSubclassOf<class AGuideActor> GuideActor;
 
 	FVector* locations;
 	FRotator* rotation;
@@ -28,7 +25,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "kusa")
 		int currIdx;
 
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,8 +32,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };

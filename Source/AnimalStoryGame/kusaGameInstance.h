@@ -28,9 +28,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
 	bool bIsCurrentFoodIsThere;
 	
-	//show Path
+	//show Path when inspected
 	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
-		bool bshowPath;
+		bool bshowPath = false;
 
+
+	//draw new giude actor
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
+		bool bDrawGuideActor;
 
 };
