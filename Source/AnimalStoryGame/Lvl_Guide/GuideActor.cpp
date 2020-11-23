@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h" 
 #include "../characters/mainChar_Fox.h"
 #include "../kusaGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AGuideActor::AGuideActor()
@@ -39,7 +40,9 @@ void AGuideActor::Tick(float DeltaTime)
 	UkusaGameInstance* GameInst = Cast<UkusaGameInstance>(GetGameInstance());
 	if (mesh) {
 		if (GameInst->bshowPath) {
-			mesh->SetVisibility(true);
+			//FVector foxPos = UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetRootComponent()->GetComponentLocation();
+			if (foxPos - FVector(0).)
+				mesh->SetVisibility(true);
 		}
 		else {
 			mesh->SetVisibility(false);
