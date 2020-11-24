@@ -40,9 +40,7 @@ void AGuideActor::Tick(float DeltaTime)
 	UkusaGameInstance* GameInst = Cast<UkusaGameInstance>(GetGameInstance());
 	if (mesh) {
 		if (GameInst->bshowPath) {
-			//FVector foxPos = UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetRootComponent()->GetComponentLocation();
-			if (foxPos - FVector(0).)
-				mesh->SetVisibility(true);
+			mesh->SetVisibility(true);
 		}
 		else {
 			mesh->SetVisibility(false);
