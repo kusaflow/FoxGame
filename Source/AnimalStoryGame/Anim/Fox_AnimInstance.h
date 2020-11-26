@@ -50,6 +50,15 @@ public:
 	float interact;
 
 
+	//actions---------------------------------------------------
+	//aatack
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVarAttack")
+	float attackIndex = 0;
+
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVarAttack")
+	bool bPlayAttckAnim = false;
+
+
 
 
 	//Effector Target Alpha 
