@@ -356,7 +356,7 @@ void AmainChar_Fox::CanLookAround(float val) {
 		bCanLookAround = true;
 	}
 	else {
-		cameraBoom->SetRelativeRotation(FRotator(-20, -35, 0.f));
+		cameraBoom->SetRelativeRotation(FRotator(-20, -15/*-35*/, 0.f));
 	}
 }
 
