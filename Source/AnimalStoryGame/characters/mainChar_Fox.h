@@ -117,7 +117,12 @@ public:
 		float powerLvl;// total power it can have is 1000 at base and will be upgrated
 
 	
+	//Enemy=================================================================
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar_Enemy")
+	int EnemyToTaget_Idx;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar_Enemy")
+	FVector Enemy_Location;
 
 
 protected:

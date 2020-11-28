@@ -13,6 +13,7 @@
 #include "../Anim/Fox_AnimInstance.h"
 #include "../kusaGameInstance.h" 	
 #include "Components/CapsuleComponent.h"
+#include "Engine/EngineTypes.h"
 
 
 // Sets default values
@@ -57,6 +58,7 @@ void AmainChar_Fox::BeginPlay()
 
 		InitMeshRelativeLoc = GetMesh()->GetRelativeTransform().GetLocation();
 	}
+
 	
 }
 
@@ -115,10 +117,9 @@ void AmainChar_Fox::Tick(float DeltaTime)
 			
 		}
 	}
-	
+
 		
-
-
+	
 }
 
 // Called to bind functionality to input
