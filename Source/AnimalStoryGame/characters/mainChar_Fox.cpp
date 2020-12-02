@@ -43,21 +43,7 @@ void AmainChar_Fox::BeginPlay()
 
 	RootComponent->AddLocalRotation(FRotator(0, 60, 0));
 
-	if (GetMesh()->SkeletalMesh) {
-		const FVector Back_LeftBone_WorldLocation = GetMesh()->GetBoneLocation(Back_Left_LegBoneName);
-		Back_LeftBone_RelativeLocation = GetActorTransform().InverseTransformPosition(Back_LeftBone_WorldLocation);
-
-		const FVector Back_RightBone_WorldLocation = GetMesh()->GetBoneLocation(Back_Right_LegBoneName);
-		Back_RightBone_RelativeLocation = GetActorTransform().InverseTransformPosition(Back_RightBone_WorldLocation);
-
-		const FVector Front_LeftBone_WorldLocation = GetMesh()->GetBoneLocation(Front_Left_LegBoneName);
-		Front_LeftBone_RelativeLocation = GetActorTransform().InverseTransformPosition(Front_LeftBone_WorldLocation);
-
-		const FVector Front_RightBone_WorldLocation = GetMesh()->GetBoneLocation(Front_Right_LegBoneName);
-		Front_RightBone_RelativeLocation = GetActorTransform().InverseTransformPosition(Front_RightBone_WorldLocation);
-
-		InitMeshRelativeLoc = GetMesh()->GetRelativeTransform().GetLocation();
-	}
+	
 
 	
 }
@@ -77,9 +63,7 @@ void AmainChar_Fox::Tick(float DeltaTime)
 		GetCharacterMovement()->MaxWalkSpeed -= 800 * DeltaTime;
 	}
 
-	//Inverse Kinemetics
-	IK(DeltaTime);
-
+	
 	//animInst index set
 	AnimInst_Idx = gameInst->anim_inst_idx;
 	
@@ -146,133 +130,6 @@ void AmainChar_Fox::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	
 }
 
-
-void AmainChar_Fox::IK(float DeltaTime) {
-	//Inverse Kinemetics
-	UFox_AnimInstance* animInst = Cast<UFox_AnimInstance>(GetMesh()->GetAnimInstance());
-
-	if (!animInst) {
-		return;
-	}
-
-	//=================Ik--------------------------
-
-	TArray<AActor*> ActorToIgnore;
-	FHitResult Back_LeftLeg_Hit;
-
-	const FVector Back_LeftLeg_Loc = GetTransform().TransformPosition(Back_LeftBone_RelativeLocation);
-	bool b_Back_LeftFootTrace = UKismetSystemLibrary::SphereTraceSingle(this, Back_LeftLeg_Loc + FVector(0, 0, 50),
-		Back_LeftLeg_Loc + FVector(0, 0, -100), 10, ETraceTypeQuery::TraceTypeQuery1, false, ActorToIgnore,
-		EDrawDebugTrace::None, Back_LeftLeg_Hit, false);
-
-	FHitResult Back_RightLeg_Hit;
-
-	const FVector Back_RightLeg_Loc = GetTransform().TransformPosition(Back_RightBone_RelativeLocation);
-	bool b_Back_RightFootTrace = UKismetSystemLibrary::SphereTraceSingle(this, Back_RightLeg_Loc + FVector(0, 0, 50),
-		Back_RightLeg_Loc + FVector(0, 0, -100), 10, ETraceTypeQuery::TraceTypeQuery1, false, ActorToIgnore,
-		EDrawDebugTrace::None, Back_RightLeg_Hit, false);
-
-	float Back_zOffset = 0;
-	if (Back_LeftLeg_Hit.ImpactPoint.Z < Back_RightLeg_Hit.ImpactPoint.Z) {
-		Back_zOffset = Back_LeftLeg_Loc.Z - Back_LeftLeg_Hit.ImpactPoint.Z;
-
-		animInst->Back_RightLeg_Effector_Loc = Back_RightLeg_Hit.ImpactPoint + FVector(0, 0, 10);
-		animInst->Back_RightLeg_Alpha = 1;
-		animInst->Back_LeftLeg_Alpha = 0;
-
-	}
-	else {
-		Back_zOffset = Back_RightLeg_Loc.Z - Back_RightLeg_Hit.ImpactPoint.Z;
-
-		animInst->Back_LeftLeg_Effector_Loc = Back_LeftLeg_Hit.ImpactPoint + FVector(0, 0, 10);
-		animInst->Back_LeftLeg_Alpha = 1;
-		animInst->Back_RightLeg_Alpha = 0;
-
-	}
-
-	GetMesh()->SetRelativeLocation(InitMeshRelativeLoc - FVector(0, 0, Back_zOffset - 10));
-
-	if (GetVelocity().Size() != 0) {
-
-
-		animInst->Back_LeftLeg_Effector_Loc = FVector(0);
-		animInst->Back_LeftLeg_Target_Loc = FVector(0);
-		animInst->Back_LeftLeg_Alpha = 0;
-
-		animInst->Back_RightLeg_Effector_Loc = FVector(0);
-		animInst->Back_RightLeg_Target_Loc = FVector(0);
-		animInst->Back_RightLeg_Alpha = 0;
-
-		animInst->Front_LeftLeg_Effector_Loc = FVector(0);
-		animInst->Front_LeftLeg_Target_Loc = FVector(0);
-		animInst->Front_LeftLeg_Alpha = 0;
-
-		animInst->Front_RightLeg_Effector_Loc = FVector(0);
-		animInst->Front_RightLeg_Target_Loc = FVector(0);
-		animInst->Front_RightLeg_Alpha = 0;
-	}
-	//Front Legs
-	FHitResult Front_LeftLeg_Hit;
-
-	const FVector Front_LeftLeg_Loc = GetTransform().TransformPosition(Front_LeftBone_RelativeLocation);
-	bool b_Front_LeftFootTrace = UKismetSystemLibrary::SphereTraceSingle(this, Front_LeftLeg_Loc + FVector(0, 0, 50),
-		Front_LeftLeg_Loc + FVector(0, 0, -100), 10, ETraceTypeQuery::TraceTypeQuery1, false, ActorToIgnore,
-		EDrawDebugTrace::None, Front_LeftLeg_Hit, false);
-
-	FHitResult Front_RightLeg_Hit;
-
-	const FVector Front_RightLeg_Loc = GetTransform().TransformPosition(Front_RightBone_RelativeLocation);
-	bool b_Front_RightFootTrace = UKismetSystemLibrary::SphereTraceSingle(this, Front_RightLeg_Loc + FVector(0, 0, 50),
-		Front_RightLeg_Loc + FVector(0, 0, -100), 10, ETraceTypeQuery::TraceTypeQuery1, false, ActorToIgnore,
-		EDrawDebugTrace::None, Front_RightLeg_Hit, false);
-
-	float Front_zOffset = 0;
-	/*
-	if (Front_LeftLeg_Hit.ImpactPoint.Z < Front_RightLeg_Hit.ImpactPoint.Z) {
-		Front_zOffset = Front_LeftLeg_Hit.ImpactPoint.Z - Front_LeftBone_RelativeLocation.Z;
-
-		animInst->Front_RightLeg_Effector_Loc = Front_RightLeg_Hit.ImpactPoint + FVector(0, 0, 10);
-		animInst->Front_RightLeg_Alpha = 1;
-		animInst->Front_LeftLeg_Alpha = 0;//0
-	}
-	else {
-		Front_zOffset = Front_RightLeg_Hit.ImpactPoint.Z - Front_RightBone_RelativeLocation.Z;
-
-		animInst->Front_LeftLeg_Effector_Loc = Front_LeftLeg_Hit.ImpactPoint + FVector(0, 0, 10);
-		animInst->Front_LeftLeg_Alpha = 1;
-		animInst->Front_RightLeg_Alpha = 0;//0
-	}*/
-
-	if (Front_LeftLeg_Hit.ImpactPoint.Z < Front_RightLeg_Hit.ImpactPoint.Z) {
-		Front_zOffset = Front_LeftLeg_Hit.ImpactPoint.Z - Front_LeftLeg_Loc.Z;
-	}
-	else {
-		Front_zOffset = Front_RightLeg_Hit.ImpactPoint.Z - Front_RightLeg_Loc.Z;
-	}
-
-	if (GetVelocity().Size() == 0) {
-		animInst->Front_RightLeg_Effector_Loc = Front_RightLeg_Hit.ImpactPoint + FVector(0, 0, 5);
-		animInst->Front_LeftLeg_Effector_Loc = Front_LeftLeg_Hit.ImpactPoint + FVector(0, 0, 5);
-		animInst->Front_RightLeg_Alpha = 1;
-		animInst->Front_LeftLeg_Alpha = 1;
-	}
-
-	if (fox_spine1_yOffset_shouldBe >= (Back_zOffset * -1) - Front_zOffset) {
-		fox_spine1_yOffset_shouldBe -= DeltaTime * 100;
-	}
-	else if (fox_spine1_yOffset_shouldBe < (Back_zOffset * -1) - Front_zOffset) {
-		fox_spine1_yOffset_shouldBe += DeltaTime * 100;
-	}
-
-	//animInst->fox_spine1_yOffset = Front_RightLeg_Hit.ImpactPoint.Z - Front_RightLeg_Loc.Z;// - Back_RightLeg_Hit.ImpactPoint.Z;
-	animInst->fox_spine1_yOffset = /*fox_spine1_yOffset_shouldBe; */(Back_zOffset * -1) - Front_zOffset;
-	//GetMesh()->SetRelativeLocation(InitMeshRelativeLoc - FVector(0, 0, Back_zOffset - 10));
-
-
-
-	//Ik Ends---------------------------------------------------------------------
-
-}
 
 
 void AmainChar_Fox :: moveForward(float val) {

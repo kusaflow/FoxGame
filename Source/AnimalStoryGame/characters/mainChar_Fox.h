@@ -33,27 +33,8 @@ public:
 
 	bool bCanLookAround = false;
 
-	//BoneNames 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "k_BoneName")
-	FName Back_Left_LegBoneName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "k_BoneName")
-	FName Back_Right_LegBoneName;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "k_BoneName")
-	FName Front_Left_LegBoneName;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "k_BoneName")
-	FName Front_Right_LegBoneName;
-
-
-	FVector Back_LeftBone_RelativeLocation, Back_RightBone_RelativeLocation;
-	FVector Front_LeftBone_RelativeLocation, Front_RightBone_RelativeLocation;
-
-	FVector InitMeshRelativeLoc;
-
-	float fox_spine1_yOffset_shouldBe;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
 	float interact;
 	/*
@@ -154,8 +135,7 @@ public:
 	UFUNCTION()
 	void CanLookAround(float val);
 
-	void IK(float DeltaTime);
-
+	
 	UFUNCTION()
 	void interact_f();
 
