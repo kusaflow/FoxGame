@@ -19,13 +19,13 @@ As1_lvlGuide::As1_lvlGuide()
 	rotation = new FRotator[totalCheckPoints];
 	Box_Bounds = new FVector[totalCheckPoints];
 
-	locations[0] = FVector(-20, -1100, 500);
+	locations[0] = FVector(0, -913, 530);
 	rotation[0] = FRotator(0);
-	Box_Bounds[0] = FVector(1);
+	Box_Bounds[0] = FVector(365,78,425);
 
 	locations[1] = FVector(-3020.0, -2270.0, 500);
 	rotation[1] = FRotator(0, -60, 0);
-	Box_Bounds[1] = FVector(1);
+	Box_Bounds[1] = FVector(365, 78, 425);
 
 }
 
