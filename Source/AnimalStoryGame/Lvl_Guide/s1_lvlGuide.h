@@ -19,7 +19,8 @@ public:
 	TSubclassOf<class AGuideActor> GuideActor;
 
 	FVector* locations;
-	FRotator* rotation;
+	FRotator* rotation; 
+	FVector* Box_Bounds;
 	int totalCheckPoints;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "kusa")

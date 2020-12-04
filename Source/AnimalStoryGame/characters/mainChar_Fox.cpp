@@ -27,7 +27,7 @@ AmainChar_Fox::AmainChar_Fox()
 	cameraBoom->bDoCollisionTest = false;
 	cameraBoom->TargetArmLength = 800;
 	cameraBoom->SocketOffset = FVector(0.f, 0.f, 0.f);
-	cameraBoom->SetRelativeRotation(FRotator(-20, 300, 0.f));
+	cameraBoom->SetRelativeRotation(FRotator(-20, -70, 0.f));
 	//cameraBoom->RelativeRotation = FRotator(0.f, 0.f, 0.f);
 	//cameraBoom->bUsePawnControlRotation = false;
 
@@ -214,7 +214,7 @@ void AmainChar_Fox::CanLookAround(float val) {
 		bCanLookAround = true;
 	}
 	else {
-		cameraBoom->SetRelativeRotation(FRotator(-20, -15/*-35*/, 0.f));
+		cameraBoom->SetRelativeRotation(FRotator(-20, -35, 0.f));
 	}
 }
 

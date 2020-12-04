@@ -60,3 +60,7 @@ void AGuideActor::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 	}
 
 }
+
+void AGuideActor::setBoxBounds(FVector bounds) {
+	box->SetBoxExtent(bounds);
+}

@@ -13,22 +13,19 @@ As1_lvlGuide::As1_lvlGuide()
 
 	currIdx = 1;
 
-	totalCheckPoints = 4;
+	totalCheckPoints = 2;
 
 	locations = new FVector[totalCheckPoints];
 	rotation = new FRotator[totalCheckPoints];
+	Box_Bounds = new FVector[totalCheckPoints];
 
-	locations[0] = FVector(1130, -2350, 500);
+	locations[0] = FVector(-20, -1100, 500);
 	rotation[0] = FRotator(0);
+	Box_Bounds[0] = FVector(1);
 
-	locations[1] = FVector(-3195.0, -5315, 500);
+	locations[1] = FVector(-3020.0, -2270.0, 500);
 	rotation[1] = FRotator(0, -60, 0);
-
-	locations[2] = FVector(1130, -7752, 500);
-	rotation[2] = FRotator(0, 50, 0);
-
-	locations[3] = FVector(6350, -7752, 500);
-	rotation[3] = FRotator(0, 120, 0);
+	Box_Bounds[1] = FVector(1);
 
 }
 
@@ -47,7 +44,7 @@ void As1_lvlGuide::BeginPlay()
 
 		UWorld* world = GetWorld();
 		if (world)
-			world->SpawnActor<AActor>(GuideActor, locations[currIdx - 1], rotation[currIdx - 1], spawnPara);
+			world->SpawnActor<AGuideActor>(GuideActor, locations[currIdx - 1], rotation[currIdx - 1], spawnPara)->setBoxBounds(Box_Bounds[currIdx - 1]);
 	}
 	gameInst->bDrawGuideActor = false;
 	gameInst->bshowPath= false;
