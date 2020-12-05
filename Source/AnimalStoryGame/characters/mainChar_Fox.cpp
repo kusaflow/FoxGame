@@ -27,12 +27,13 @@ AmainChar_Fox::AmainChar_Fox()
 	cameraBoom->bDoCollisionTest = false;
 	cameraBoom->TargetArmLength = 800;
 	cameraBoom->SocketOffset = FVector(0.f, 0.f, 0.f);
-	cameraBoom->SetRelativeRotation(FRotator(-20, -70, 0.f));
+	//cameraBoom->SetRelativeRotation(FRotator(-20, -70, 0.f));
 	//cameraBoom->RelativeRotation = FRotator(0.f, 0.f, 0.f);
 	//cameraBoom->bUsePawnControlRotation = false;
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(cameraBoom, USpringArmComponent::SocketName);
+	//FollowCamera->SetRelativeRotation(FRotator(0, 25, 0.f));
 
 }
 
@@ -127,7 +128,9 @@ void AmainChar_Fox::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	 
 	//interact
 	PlayerInputComponent->BindAction("interact", IE_Pressed, this, &AmainChar_Fox::interact_f);
-	
+	//jumping
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AmainChar_Fox::JumpFox);
+
 }
 
 
@@ -137,6 +140,34 @@ void AmainChar_Fox :: moveForward(float val) {
 		return;
 	}
 
+	
+	
+	const FRotator Rotation = FollowCamera->GetComponentRotation(); //RootComponent->GetComponentRotation();//Controller->GetControlRotation();
+	
+	const FRotator YawRotation(0.0f, Rotation.Yaw+20, 0.0f);
+
+	
+
+	if (val != 0) {
+		if (!bIsMoving) {
+			FRotator resetFoxRotation(RootComponent->GetComponentRotation());
+			resetFoxRotation.Yaw -= 20;
+			//resetFoxRotation.Roll += 20;
+			//cameraBoom->SetWorldRotation(resetFoxRotation);
+		}
+		RootComponent->SetWorldRotation(YawRotation);
+		bIsMoving = true;
+	}
+	else {
+		bIsMoving = false;
+	}
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+	bIsMovingForward = val > 0 ? true : false;
+
+	AddMovementInput(Direction, val);
+
+	/*
 	if (val == 1) {
 		if (Controller != nullptr) {
 			const FRotator Rotation = RootComponent->GetComponentRotation();//Controller->GetControlRotation();
@@ -158,6 +189,7 @@ void AmainChar_Fox :: moveForward(float val) {
 			AddMovementInput(Direction, -1);
 		}
 	}
+	*/
 
 	
 }
@@ -182,7 +214,7 @@ void AmainChar_Fox::CameraYaw_z(float val) {
 	}
 
 	if (!bCanLookAround) {
-		return;
+		//return;
 	}
 	FRotator newR = FRotator(0, 0, 0);
 	newR.Yaw += val;
@@ -196,7 +228,7 @@ void AmainChar_Fox::CameraPitch_y(float val) {
 	}
 
 	if (!bCanLookAround) {
-		return;
+		//return;
 	}
 	FRotator newR = cameraBoom->GetRelativeRotation();
 	newR.Pitch = FMath::Clamp(newR.Pitch + val, -80.0f, 4.0f);
@@ -214,7 +246,7 @@ void AmainChar_Fox::CanLookAround(float val) {
 		bCanLookAround = true;
 	}
 	else {
-		cameraBoom->SetRelativeRotation(FRotator(-20, -35, 0.f));
+		//cameraBoom->SetRelativeRotation(FRotator(-20, -35, 0.f));
 	}
 }
 
@@ -224,12 +256,20 @@ void AmainChar_Fox::moveLeftRight(float val) {
 		return;
 	}
 
+	if (!bIsMovingForward) {
+		val *= -1;
+	}
+
+	cameraBoom->AddWorldRotation(FRotator(0, val * 50 * GetWorld()->GetDeltaSeconds(), 0));
+
+	/*
 	if (val == -1) {
 		RootComponent->AddWorldRotation(FRotator(0,-50 * GetWorld()->GetDeltaSeconds(),0));
 	}
 	else if (val == 1) {
 		RootComponent->AddWorldRotation(FRotator(0, 50 * GetWorld()->GetDeltaSeconds(), 0));
 	}
+	*/
 }
  
 void AmainChar_Fox::interact_f() {
@@ -274,6 +314,10 @@ void AmainChar_Fox :: HudManagement() {
 	if (What_to_do_with_interact != 0) {
 		
 	}
+}
+
+void AmainChar_Fox::JumpFox() {
+	Jump();
 }
 
 

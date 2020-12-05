@@ -33,6 +33,8 @@ public:
 
 	bool bCanLookAround = false;
 
+	bool bIsMovingForward = true , bIsMoving = false;
+
 
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "kusaVar")
@@ -144,5 +146,9 @@ public:
 
 	UFUNCTION()
 		void HudManagement();
+
+	UFUNCTION()
+		void JumpFox();
+
 
 };
