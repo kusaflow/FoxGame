@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ // Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "helpfulDataOnScreen.h"
@@ -23,5 +23,29 @@ void UhelpfulDataOnScreen :: Update_Interact_progressBar() {
 		//UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetHUD();
 		interact_progressBar->SetPercent((float)fox->interact / fox->mileStone_interactVal);
 	}
+
 }
 
+void UhelpfulDataOnScreen :: Visibility_Primary(bool setV) {
+	if (setV)
+		PrimaryHelpText->SetVisibility(ESlateVisibility::Visible);
+	else
+		PrimaryHelpText->SetVisibility(ESlateVisibility::Hidden);
+}
+
+
+void UhelpfulDataOnScreen::Visibility_Secondary(bool setV) {
+	if (setV)
+		SecondaryHelpText->SetVisibility(ESlateVisibility::Visible);
+	else
+		SecondaryHelpText->SetVisibility(ESlateVisibility::Hidden);
+}
+
+
+void UhelpfulDataOnScreen::SetText_Primary(FText msg) {
+	PrimaryHelpText->SetText(msg);
+}
+
+void UhelpfulDataOnScreen::SetText_Secondary(FText msg) {
+	SecondaryHelpText->SetText(msg);
+}

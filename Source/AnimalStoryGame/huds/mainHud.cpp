@@ -16,7 +16,7 @@ void AmainHud::BeginPlay() {
 	if (helper_subClass) {
 		UI_helper = CreateWidget<UhelpfulDataOnScreen>(GetWorld(), helper_subClass);
 		if (UI_helper) {
-			//UI_helper->AddToViewport();
+			UI_helper->AddToViewport();
 		}
 	}
 }

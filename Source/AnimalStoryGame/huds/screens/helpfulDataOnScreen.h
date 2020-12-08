@@ -20,11 +20,25 @@ public:
 
 	void Update_Interact_progressBar();
 
+	void Visibility_Primary(bool setV);
+	void Visibility_Secondary(bool setV);
+
+
+	void SetText_Primary(FText msg);
+	void SetText_Secondary(FText msg);
+	
 private:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* InstructHelper;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+		class UTextBlock* PrimaryHelpText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+		class UTextBlock* SecondaryHelpText;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UProgressBar* interact_progressBar;
